@@ -91,7 +91,7 @@ void runTest(string test, unif01_Gen* gen)
         unif01_TimerGen(gen, &res, giga, 1);
         cout << "Testing " << gen->name << " speed..." << endl;
         cout << "Time for 1E9 randoms: " << res.time << " s" << endl;
-        cout << "Meran time per random number: " << res.mean << " s"  << endl;
+        cout << "Mean time per random number: " << res.mean << " s"  << endl;
         cout << "(I get: " << res.time/1E9 << " s/number)" << endl;
         cout << "(or " << res.time << " ns/number)" << endl;
     }

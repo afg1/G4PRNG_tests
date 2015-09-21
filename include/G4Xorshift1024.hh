@@ -19,4 +19,5 @@ class G4Xorshift1024
         uint64_t shoot();
         void seed(uint64_t);
         unsigned p;
+        double maxVal;
 };

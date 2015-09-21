@@ -1,5 +1,7 @@
 #include "G4Xorshift1024.hh"
 
+#include <iostream>
+#include <cmath>
 
 G4Xorshift1024::G4Xorshift1024(uint64_t seed)
 {
@@ -9,6 +11,7 @@ G4Xorshift1024::G4Xorshift1024(uint64_t seed)
         state[i] = shoot64();
     }
     p = 0;
+    maxVal = 1.0/static_cast<double>(UINT64_MAX);
 }
 
 G4Xorshift1024::G4Xorshift1024()
@@ -19,6 +22,7 @@ G4Xorshift1024::G4Xorshift1024()
         state[i] = shoot64();
     }
     p = 0;
+    maxVal = 1.0/static_cast<double>(UINT64_MAX);
 }
 
 G4Xorshift1024::~G4Xorshift1024()
@@ -50,7 +54,7 @@ uint64_t G4Xorshift1024::shoot()
 
 double G4Xorshift1024::flat()
 {
-    return static_cast<double>(shoot()/UINT64_MAX);
+    return static_cast<double>(shoot())*maxVal;
 }
 
 // Xorshift 64 generator - used to bootstrap a single seed into the array for the 1024 generator
