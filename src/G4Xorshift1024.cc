@@ -21,6 +21,9 @@ G4Xorshift1024::G4Xorshift1024()
     p = 0;
 }
 
+G4Xorshift1024::~G4Xorshift1024()
+{}
+
 void G4Xorshift1024::seed(uint64_t seed)
 {
     state64 = seed;
@@ -30,6 +33,8 @@ void G4Xorshift1024::seed(uint64_t seed)
     }
     p = 0;
 }
+
+
 
 // XORshift* 1024 generator - the one which should be used for generating random numbers
 uint64_t G4Xorshift1024::shoot()
@@ -45,7 +50,7 @@ uint64_t G4Xorshift1024::shoot()
 
 double G4Xorshift1024::flat()
 {
-    return (double)shoot()/LLONG_MAX;
+    return static_cast<double>(shoot()/UINT64_MAX);
 }
 
 // Xorshift 64 generator - used to bootstrap a single seed into the array for the 1024 generator

@@ -6,7 +6,7 @@ class G4Xorshift1024
     public:
         G4Xorshift1024(uint64_t seed);
         G4Xorshift1024();
-        ~G4Xorshift1024(){}
+        ~G4Xorshift1024();
     
     
     private:
