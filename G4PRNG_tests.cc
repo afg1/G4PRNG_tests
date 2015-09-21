@@ -14,6 +14,11 @@ extern "C"
 #include "bbattery.h"
 }
 
+
+// My xorshift1024* generator
+#include "G4Xorshift1024.hh"
+
+
 using namespace std;
 using namespace CLHEP;
 
@@ -24,6 +29,7 @@ RanecuEngine* rce = new RanecuEngine();
 Ranlux64Engine* rl64 = new Ranlux64Engine();
 RanluxEngine* rl32 = new RanluxEngine();
 RanshiEngine* rshi = new RanshiEngine();
+G4Xorshift1024* xor1024 = new G4Xorshift1024();
 
 double Dual(void)
 {
@@ -55,6 +61,11 @@ double Ranlux32(void)
 double Ranshi(void)
 {
     return rshi->flat();
+}
+
+double Xor1024(void)
+{
+    return xor1024->flat();
 }
 
 
@@ -112,6 +123,7 @@ int main(int argc, char** argv)
         cout << "Ranlux64" << endl;
         cout << "Ranlux32" << endl;
         cout << "Ranshi" << endl;
+        cout << "Xor1024" << endl;
     }
     else if(selection == "DualRand")
     {        
@@ -166,6 +178,13 @@ int main(int argc, char** argv)
         runTest(test, gen);
         unif01_DeleteExternGen01(gen);
         
+    }
+    else if(selection =="Xor1024")
+    {
+        
+        gen = unif01_CreateExternGen01("Xor1024", Xor1024);
+        runTest(test, gen);
+        unif01_DeleteExternGen01(gen);
     }
     
     else
