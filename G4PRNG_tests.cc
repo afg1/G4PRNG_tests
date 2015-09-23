@@ -59,7 +59,7 @@ void GenerateUniformSeeds(uint64_t* seedArray)
 #include "G4Xorshift1024.hh"
 
 
-static const double max_uint64_t = static_cast<double>(std::numeric_limits<uint64_t>::max());
+static const double max_uint64_t = static_cast<double>(UINT64_MAX);//std::numeric_limits<uint64_t>::max());
 
 
 using namespace std;
