@@ -168,31 +168,40 @@ double Xor1024Rev(void)
     return static_cast<double>(v)/max_uint64_t;}
 
 
-void runTest(string test, unif01_Gen* gen)
+void runTest(string test, unif01_Gen* gen, int indTest)
 {
-    if(test == "SmallCrush")
+    if(indTest < 0)// Want to run whole tests
     {
-        bbattery_SmallCrush(gen);
+        if(test == "SmallCrush")
+        {
+            bbattery_SmallCrush(gen);
+        }
+        else if(test == "Crush")
+        {
+            bbattery_Crush(gen);
+        }
+        else if(test == "BigCrush")
+        {
+            bbattery_BigCrush(gen);
+        }
+        else if(test ==  "Timer")
+        {
+            unif01_TimerRec res;
+            res.mean = -1;
+            int giga = int(1E9);
+            unif01_TimerGen(gen, &res, giga, 1);
+            cout << "Testing " << gen->name << " speed..." << endl;
+            cout << "Time for 1E9 randoms: " << res.time << " s" << endl;
+            cout << "Mean time per random number: " << res.mean << " s"  << endl;
+            cout << "(I get: " << res.time/1E9 << " s/number)" << endl;
+            cout << "(or " << res.time << " ns/number)" << endl;
+        }
     }
-    else if(test == "Crush")
+    else// Run a specific test from bigCrush
     {
-        bbattery_Crush(gen);
-    }
-    else if(test == "BigCrush")
-    {
-        bbattery_BigCrush(gen);
-    }
-    else if(test ==  "Timer")
-    {
-        unif01_TimerRec res;
-        res.mean = -1;
-        int giga = int(1E9);
-        unif01_TimerGen(gen, &res, giga, 1);
-        cout << "Testing " << gen->name << " speed..." << endl;
-        cout << "Time for 1E9 randoms: " << res.time << " s" << endl;
-        cout << "Mean time per random number: " << res.mean << " s"  << endl;
-        cout << "(I get: " << res.time/1E9 << " s/number)" << endl;
-        cout << "(or " << res.time << " ns/number)" << endl;
+        int rep[106] = {0};
+        rep[indTest] = 1;
+        bbattery_RepeatBigCrush(gen, rep);
     }
 }
 
@@ -206,8 +215,9 @@ int main(int argc, char** argv)
     string selection(argv[1]);
     string test("SmallCrush");
     uint64_t seed;
+    int indTest(-1);
     bool reverse;
-    if(argc == 5)
+    if(argc >= 5)
     {
         test = string(argv[2]);
         stringstream input(argv[3]);
@@ -219,6 +229,10 @@ int main(int argc, char** argv)
         else
         {
             reverse = false;
+        }
+        if(argc == 6)
+        {
+            indTest = atoi(argv[5]);
         }
     }
     
@@ -267,7 +281,7 @@ int main(int argc, char** argv)
             gen = unif01_CreateExternGen01("DualRand", Dual);
         }
         
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -282,7 +296,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("HepJamesRandom", James);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -297,7 +311,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("MersenneTwister", Mersenne);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -312,7 +326,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("Ranecu", Ranecu);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -327,7 +341,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("Ranlux64", Ranlux64);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -342,7 +356,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("Ranlux32", Ranlux32);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -357,7 +371,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("Ranshi", Ranshi);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
         
     }
@@ -372,7 +386,7 @@ int main(int argc, char** argv)
         {
             gen = unif01_CreateExternGen01("Xor1024", Xor1024);
         }
-        runTest(test, gen);
+        runTest(test, gen, indTest);
         unif01_DeleteExternGen01(gen);
     }
     
