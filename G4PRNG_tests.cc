@@ -31,7 +31,7 @@ void Reverse(uint64_t* theInt)
     
     uint64_t v = *theInt;
     uint64_t r = v;
-    int s = sizeof(v)*CHAR_BITS;//std::numeric_limits<uint64_t>::digits;
+    int s = sizeof(v)*CHAR_BIT;//std::numeric_limits<uint64_t>::digits;
     for(v >>= 1; v; v >>=1)
     {
         r <<= 1;
