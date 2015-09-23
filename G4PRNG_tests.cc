@@ -199,6 +199,7 @@ void runTest(string test, unif01_Gen* gen, int indTest)
     else// Run a specific test from bigCrush
     {
         int rep[106] = {0};
+        memset(&rep, 0, 106);
         rep[indTest] = 1;
         bbattery_RepeatBigCrush(gen, rep);
     }
