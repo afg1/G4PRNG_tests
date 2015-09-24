@@ -206,7 +206,10 @@ void runTest(string test, unif01_Gen* gen, int indTest)
             rep[i] = 0;
         }
         rep[indTest] = 1;
-        bbattery_RepeatBigCrush(gen, rep);
+        for(int i=0; i< 106; i++)
+            cout << rep[i] << endl;
+        
+//        bbattery_RepeatBigCrush(gen, rep);
     }
 }
 
