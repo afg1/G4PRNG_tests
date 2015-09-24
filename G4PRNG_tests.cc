@@ -200,6 +200,10 @@ void runTest(string test, unif01_Gen* gen, int indTest)
     {
         int rep[106] = {0};
         memset(&rep, 0, 106);
+        for(int i=0; i< 106; i++)
+        {
+            rep[i] = 0;
+        }
         rep[indTest] = 1;
         bbattery_RepeatBigCrush(gen, rep);
     }
