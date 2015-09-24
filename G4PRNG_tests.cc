@@ -3,6 +3,7 @@
 // Include timing feature
 #include <ctime>
 #include <climits>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
